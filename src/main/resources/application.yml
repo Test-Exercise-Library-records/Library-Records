@@ -1,7 +1,8 @@
 spring:
   application:
     name: library-records
-eureka:
-  client:
-    service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+  config:
+    import: configserver:http://localhost:8888
+
+server:
+  port: 8085
