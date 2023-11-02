@@ -8,14 +8,29 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Entity class representing a library record.
+ */
 @Entity
-@Setter
 @Getter
+@Setter
 @Table(name = "library_records")
 public class LibraryRecord {
+
+  /**
+   * Unique identifier for the library record.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  /**
+   * The title of the library record.
+   */
   private String title;
+
+  /**
+   * The author of the library record.
+   */
   private String author;
 }

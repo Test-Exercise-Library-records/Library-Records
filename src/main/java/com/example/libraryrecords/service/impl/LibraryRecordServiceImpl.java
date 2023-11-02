@@ -9,6 +9,9 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of the {@link LibraryRecordService} interface, providing methods for managing library records.
+ */
 @Service
 @RequiredArgsConstructor
 public class LibraryRecordServiceImpl implements LibraryRecordService {

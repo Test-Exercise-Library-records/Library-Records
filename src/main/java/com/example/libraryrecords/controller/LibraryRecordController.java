@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * For managing library records.
+ */
 @RestController
 @RequestMapping("/library-records")
 @RequiredArgsConstructor
@@ -30,6 +33,12 @@ public class LibraryRecordController {
 
   private final LibraryRecordService libraryRecordService;
 
+  /**
+   * Creates a new library record in the system.
+   *
+   * @param libraryRecord The library record to be created.
+   * @return A response entity containing the created library record with a status of 201 (Created).
+   */
   @PostMapping
   @Operation(summary = "Create a new library record", description = "This operation allows you to create a new library record in the system. You can provide detailed information about the record, including title, author, ISBN, and more.", tags = {
       "Library Records"})
@@ -43,6 +52,13 @@ public class LibraryRecordController {
     return new ResponseEntity<>(createdRecord, HttpStatus.CREATED);
   }
 
+  /**
+   * Retrieves a library record by its unique ID.
+   *
+   * @param id The ID of the library record to retrieve.
+   * @return A response entity containing the retrieved library record with a status of 200 (OK) if found,
+   * or a response with a status of 404 (Not Found) if the record does not exist.
+   */
   @GetMapping("/{id}")
   @Operation(summary = "Retrieve a library record by ID", description = "This operation retrieves a library record by its unique ID. If the record exists, it will be returned.", tags = {
       "Library Records"})
@@ -59,6 +75,12 @@ public class LibraryRecordController {
     }
   }
 
+  /**
+   * Retrieves a list of all library records available in the system.
+   *
+   * @return A response entity containing a list of retrieved library records with a status of 200 (OK) if records
+   * exist, or a response with a status of 204 (No Content) if there are no records.
+   */
   @GetMapping
   @Operation(summary = "Retrieve all library records", description = "This operation retrieves a list of all library records available in the system. If there are no records, an empty list will be returned.", tags = {
       "Library Records"})
@@ -75,6 +97,15 @@ public class LibraryRecordController {
     }
   }
 
+  /**
+   * Updates an existing library record by its ID.
+   *
+   * @param id            The ID of the library record to update.
+   * @param libraryRecord The updated library record information.
+   * @return A response entity containing the updated library record with a status of 200 (OK) if the update is successful,
+   * or a response with a status of 404 (Not Found) if the record does not exist, or a response with a status of 400 (Bad Request)
+   * if the request is invalid.
+   */
   @PutMapping("/{id}")
   @Operation(summary = "Update a library record by ID", description = "This operation allows you to update an existing library record by its ID. If the record exists and the update is successful, the updated record will be returned.", tags = {
       "Library Records"})
@@ -93,6 +124,12 @@ public class LibraryRecordController {
     }
   }
 
+  /**
+   * Deletes a library record by its ID.
+   *
+   * @param id The ID of the library record to delete.
+   * @return A response entity with a status of 204 (No Content) if the record is successfully deleted.
+   */
   @DeleteMapping("/{id}")
   @Operation(summary = "Delete a library record by ID", description = "This operation deletes a library record by its ID. If the record is successfully deleted, no content will be returned.", tags = {
       "Library Records"})
