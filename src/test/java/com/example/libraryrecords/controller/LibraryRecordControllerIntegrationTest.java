@@ -28,7 +28,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class LibraryRecordControllerIntegrationTest {
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-  private static final String TEST_TITLE = "testTitle";
+  private static final String TITLE = "testTitle";
+  private static final String AUTHOR = "testAuthor";
   private static final long RECORD_ID = 1L;
 
   @Autowired
@@ -44,10 +45,12 @@ class LibraryRecordControllerIntegrationTest {
   @Order(1)
   void testCreateLibraryRecord_create_CreatedAndFieldValueIsValid() throws Exception {
     LibraryRecordDTO inputRecord = new LibraryRecordDTO();
-    inputRecord.setTitle(TEST_TITLE);
+    inputRecord.setTitle(TITLE);
+    inputRecord.setAuthor(AUTHOR);
+
     mockMvc.perform(post("/library-records").contentType(MediaType.APPLICATION_JSON)
             .content(OBJECT_MAPPER.writeValueAsString(inputRecord))).andExpect(status().isCreated())
-        .andExpect(jsonPath("$.title").value(TEST_TITLE));
+        .andExpect(jsonPath("$.title").value(TITLE));
   }
 
   @Test
@@ -55,7 +58,7 @@ class LibraryRecordControllerIntegrationTest {
   void testGetLibraryRecordById_retrieveOne_OkAndFieldValueIsValid() throws Exception {
     Long recordId = RECORD_ID;
     mockMvc.perform(get("/library-records/{id}", recordId)).andExpect(status().isOk())
-        .andExpect(jsonPath("$.title").value(TEST_TITLE));
+        .andExpect(jsonPath("$.title").value(TITLE));
   }
 
   @Test
@@ -64,7 +67,7 @@ class LibraryRecordControllerIntegrationTest {
     mockMvc.perform(get("/library-records")).andExpect(status().isOk())
         .andExpect(jsonPath("$.*").isArray())
         .andExpect(jsonPath("$.*", hasSize(1)))
-        .andExpect(jsonPath("$.[0].title").value(TEST_TITLE));
+        .andExpect(jsonPath("$.[0].title").value(TITLE));
   }
 
   @Test
@@ -73,6 +76,8 @@ class LibraryRecordControllerIntegrationTest {
     LibraryRecordDTO updatedRecord = new LibraryRecordDTO();
     String updatedTitle = "updatedTitle";
     updatedRecord.setTitle(updatedTitle);
+    updatedRecord.setAuthor(AUTHOR);
+
     mockMvc.perform(put("/library-records/{id}", RECORD_ID).contentType(MediaType.APPLICATION_JSON)
             .content(OBJECT_MAPPER.writeValueAsString(updatedRecord))).andExpect(status().isOk())
         .andExpect(jsonPath("$.title").value(updatedTitle));

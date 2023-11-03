@@ -1,11 +1,14 @@
 package com.example.libraryrecords.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.example.libraryrecords.dto.LibraryRecordDTO;
+import com.example.libraryrecords.exception.LibraryRecordNotFoundException;
 import com.example.libraryrecords.service.LibraryRecordService;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +27,7 @@ class LibraryRecordControllerTest {
 
   @BeforeEach
   void setUp() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
@@ -53,6 +56,16 @@ class LibraryRecordControllerTest {
   }
 
   @Test
+  void testGetLibraryRecordById_RecordNotFound() {
+    long recordId = 1L;
+
+    when(libraryRecordService.getById(recordId)).thenReturn(null);
+
+    assertThrows(LibraryRecordNotFoundException.class,
+        () -> libraryRecordController.getLibraryRecordById(recordId));
+  }
+
+  @Test
   void testGetAllLibraryRecords() {
     when(libraryRecordService.getAll()).thenReturn(new ArrayList<>());
 
@@ -61,6 +74,17 @@ class LibraryRecordControllerTest {
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
+
+  @Test
+  void testGetAllLibraryRecords_NoContent() {
+    when(libraryRecordService.getAll()).thenReturn(Collections.emptyList());
+
+    ResponseEntity<List<LibraryRecordDTO>> response =
+        libraryRecordController.getAllLibraryRecords();
+
+    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+  }
+
 
   @Test
   void testUpdateLibraryRecord() {
@@ -74,6 +98,17 @@ class LibraryRecordControllerTest {
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(updatedRecord, response.getBody());
+  }
+
+  @Test
+  void testUpdateLibraryRecord_RecordNotFound() {
+    long recordId = 1L;
+    LibraryRecordDTO inputDTO = new LibraryRecordDTO();
+
+    when(libraryRecordService.update(recordId, inputDTO)).thenReturn(null);
+
+    assertThrows(LibraryRecordNotFoundException.class,
+        () -> libraryRecordController.updateLibraryRecord(recordId, inputDTO));
   }
 
   @Test
