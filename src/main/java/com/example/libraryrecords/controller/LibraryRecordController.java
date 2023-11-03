@@ -1,6 +1,7 @@
 package com.example.libraryrecords.controller;
 
 import com.example.libraryrecords.dto.LibraryRecordDTO;
+import com.example.libraryrecords.exception.LibraryRecordNotFoundException;
 import com.example.libraryrecords.service.LibraryRecordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -9,6 +10,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,7 +50,7 @@ public class LibraryRecordController {
           @Content(mediaType = "application/json", schema = @Schema(implementation = LibraryRecordDTO.class))}),
       @ApiResponse(responseCode = "400", description = "Bad request", content = @Content)})
   public ResponseEntity<LibraryRecordDTO> createLibraryRecord(
-      @RequestBody LibraryRecordDTO libraryRecord) {
+      @RequestBody @Valid LibraryRecordDTO libraryRecord) {
     LibraryRecordDTO createdRecord = libraryRecordService.create(libraryRecord);
     return new ResponseEntity<>(createdRecord, HttpStatus.CREATED);
   }
@@ -66,12 +69,12 @@ public class LibraryRecordController {
       @ApiResponse(responseCode = "200", description = "Library record retrieved successfully", content = {
           @Content(mediaType = "application/json", schema = @Schema(implementation = LibraryRecordDTO.class))}),
       @ApiResponse(responseCode = "404", description = "Library record not found", content = @Content)})
-  public ResponseEntity<LibraryRecordDTO> getLibraryRecordById(@PathVariable Long id) {
+  public ResponseEntity<LibraryRecordDTO> getLibraryRecordById(@PathVariable @Min(1) Long id) {
     LibraryRecordDTO libraryRecord = libraryRecordService.getById(id);
     if (libraryRecord != null) {
       return new ResponseEntity<>(libraryRecord, HttpStatus.OK);
     } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new LibraryRecordNotFoundException("Library Record not found");
     }
   }
 
@@ -114,13 +117,14 @@ public class LibraryRecordController {
           @Content(mediaType = "application/json", schema = @Schema(implementation = LibraryRecordDTO.class))}),
       @ApiResponse(responseCode = "404", description = "Library record not found", content = @Content),
       @ApiResponse(responseCode = "400", description = "Bad request", content = @Content)})
-  public ResponseEntity<LibraryRecordDTO> updateLibraryRecord(@PathVariable Long id, @RequestBody
-  LibraryRecordDTO libraryRecord) {
+  public ResponseEntity<LibraryRecordDTO> updateLibraryRecord(@PathVariable @Min(1) Long id,
+                                                              @RequestBody
+                                                              @Valid LibraryRecordDTO libraryRecord) {
     LibraryRecordDTO updatedRecord = libraryRecordService.update(id, libraryRecord);
     if (updatedRecord != null) {
       return new ResponseEntity<>(updatedRecord, HttpStatus.OK);
     } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      throw new LibraryRecordNotFoundException("Library Record not found");
     }
   }
 
@@ -135,7 +139,7 @@ public class LibraryRecordController {
       "Library Records"})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "204", description = "Library record deleted successfully")})
-  public ResponseEntity<Void> deleteLibraryRecord(@PathVariable Long id) {
+  public ResponseEntity<Void> deleteLibraryRecord(@PathVariable @Min(1) Long id) {
     libraryRecordService.delete(id);
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
