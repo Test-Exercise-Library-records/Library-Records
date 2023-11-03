@@ -1,8 +1,11 @@
 package com.example.libraryrecords.exception;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Custom exception class for representing a "Library Record Not Found" scenario in the Library Records microservice.
  */
+@Slf4j
 public class LibraryRecordNotFoundException extends RuntimeException {
 
   /**
@@ -12,5 +15,6 @@ public class LibraryRecordNotFoundException extends RuntimeException {
    */
   public LibraryRecordNotFoundException(String message) {
     super(message);
+    log.debug("Record is not found exception: {}", message);
   }
 }

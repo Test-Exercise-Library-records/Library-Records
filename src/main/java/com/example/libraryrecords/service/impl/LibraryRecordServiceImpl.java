@@ -7,11 +7,13 @@ import com.example.libraryrecords.repository.LibraryRecordRepository;
 import com.example.libraryrecords.service.LibraryRecordService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
  * Implementation of the {@link LibraryRecordService} interface, providing methods for managing library records.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class LibraryRecordServiceImpl implements LibraryRecordService {
@@ -22,18 +24,21 @@ public class LibraryRecordServiceImpl implements LibraryRecordService {
   public LibraryRecordDTO create(LibraryRecordDTO dto) {
     LibraryRecord entity = mapper.libraryRecordDTOToLibraryRecord(dto);
     LibraryRecord savedEntity = repository.save(entity);
+    log.debug("New record id {} is created", entity.getId());
     return mapper.libraryRecordToLibraryRecordDTO(savedEntity);
   }
 
   @Override
   public LibraryRecordDTO getById(Long id) {
     LibraryRecord entity = repository.findById(id).orElse(null);
+    log.debug("Record id {} is retrieved successfully", id);
     return (entity != null) ? mapper.libraryRecordToLibraryRecordDTO(entity) : null;
   }
 
   @Override
   public List<LibraryRecordDTO> getAll() {
     List<LibraryRecord> entities = repository.findAll();
+    log.debug("All records are retrieved");
     return entities.stream().map(mapper::libraryRecordToLibraryRecordDTO).toList();
   }
 
@@ -43,13 +48,16 @@ public class LibraryRecordServiceImpl implements LibraryRecordService {
     if (existingEntity != null) {
       mapper.updateLibraryRecord(dto, existingEntity);
       repository.save(existingEntity);
+      log.debug("Record id {} is updated", id);
       return mapper.libraryRecordToLibraryRecordDTO(existingEntity);
     }
+    log.debug("Record id {} is not found for update", id);
     return null;
   }
 
   @Override
   public void delete(Long id) {
     repository.deleteById(id);
+    log.debug("Record id {} is deleted", id);
   }
 }

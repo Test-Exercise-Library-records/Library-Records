@@ -20,8 +20,6 @@ public class LibraryRecordsExceptionHandler {
   @ExceptionHandler({LibraryRecordNotFoundException.class})
   public ResponseEntity<Object> handleStudentNotFoundException(
       LibraryRecordNotFoundException exception) {
-    return ResponseEntity
-        .status(HttpStatus.NOT_FOUND)
-        .body(exception.getMessage());
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
   }
 }

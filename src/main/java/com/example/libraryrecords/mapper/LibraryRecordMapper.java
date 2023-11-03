@@ -7,8 +7,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 /**
- * For converting between {@link LibraryRecord} entities and their corresponding
- * Data Transfer Objects (DTOs).
+ * For converting between {@link LibraryRecord} entities and their corresponding Data Transfer Objects (DTOs).
  */
 @Mapper(componentModel = "spring")
 public interface LibraryRecordMapper {

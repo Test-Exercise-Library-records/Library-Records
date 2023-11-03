@@ -59,8 +59,8 @@ public class LibraryRecordController {
    * Retrieves a library record by its unique ID.
    *
    * @param id The ID of the library record to retrieve.
-   * @return A response entity containing the retrieved library record with a status of 200 (OK) if found,
-   * or a response with a status of 404 (Not Found) if the record does not exist.
+   * @return A response entity containing the retrieved library record with a status of 200 (OK) if found, or a
+   * response with a status of 404 (Not Found) if the record does not exist.
    */
   @GetMapping("/{id}")
   @Operation(summary = "Retrieve a library record by ID", description = "This operation retrieves a library record by its unique ID. If the record exists, it will be returned.", tags = {
@@ -105,9 +105,9 @@ public class LibraryRecordController {
    *
    * @param id            The ID of the library record to update.
    * @param libraryRecord The updated library record information.
-   * @return A response entity containing the updated library record with a status of 200 (OK) if the update is successful,
-   * or a response with a status of 404 (Not Found) if the record does not exist, or a response with a status of 400 (Bad Request)
-   * if the request is invalid.
+   * @return A response entity containing the updated library record with a status of 200 (OK) if the update is
+   * successful, or a response with a status of 404 (Not Found) if the record does not exist, or a response
+   * with a status of 400 (Bad Request) if the request is invalid.
    */
   @PutMapping("/{id}")
   @Operation(summary = "Update a library record by ID", description = "This operation allows you to update an existing library record by its ID. If the record exists and the update is successful, the updated record will be returned.", tags = {

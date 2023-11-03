@@ -69,7 +69,8 @@ class LibraryRecordControllerTest {
     when(libraryRecordService.update(recordId, updatedRecord)).thenReturn(updatedRecord);
 
     ResponseEntity<LibraryRecordDTO> response =
-        libraryRecordController.updateLibraryRecord(recordId, updatedRecord);
+        libraryRecordController.updateLibraryRecord(recordId,
+            updatedRecord);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(updatedRecord, response.getBody());
