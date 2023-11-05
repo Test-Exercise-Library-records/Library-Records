@@ -3,21 +3,22 @@ package com.example.libraryrecords.service.impl;
 import com.example.libraryrecords.dto.LibraryRecordDTO;
 import com.example.libraryrecords.entity.LibraryRecord;
 import com.example.libraryrecords.mapper.LibraryRecordMapper;
-import com.example.libraryrecords.repository.LibraryRecordRepository;
-import com.example.libraryrecords.service.LibraryRecordService;
+import com.example.libraryrecords.repository.LibraryRecordsRepository;
+import com.example.libraryrecords.service.LibraryRecordsService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
- * Implementation of the {@link LibraryRecordService} interface, providing methods for managing library records.
+ * Implementation of the {@link LibraryRecordsService} interface, providing methods for managing
+ * library records.
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LibraryRecordServiceImpl implements LibraryRecordService {
-  private final LibraryRecordRepository repository;
+public class LibraryRecordsServiceImpl implements LibraryRecordsService {
+  private final LibraryRecordsRepository repository;
   private final LibraryRecordMapper mapper;
 
   @Override

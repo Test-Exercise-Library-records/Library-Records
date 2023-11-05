@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.libraryrecords.dto.LibraryRecordDTO;
 import com.example.libraryrecords.exception.LibraryRecordNotFoundException;
-import com.example.libraryrecords.service.LibraryRecordService;
+import com.example.libraryrecords.service.LibraryRecordsService;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,12 +18,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-class LibraryRecordControllerTest {
+class LibraryRecordsControllerTest {
   @InjectMocks
-  private LibraryRecordController libraryRecordController;
+  private LibraryRecordsController libraryRecordsController;
 
   @Mock
-  private LibraryRecordService libraryRecordService;
+  private LibraryRecordsService libraryRecordsService;
 
   @BeforeEach
   void setUp() {
@@ -33,10 +33,10 @@ class LibraryRecordControllerTest {
   @Test
   void testCreateLibraryRecord() {
     LibraryRecordDTO inputRecord = new LibraryRecordDTO();
-    when(libraryRecordService.create(inputRecord)).thenReturn(inputRecord);
+    when(libraryRecordsService.create(inputRecord)).thenReturn(inputRecord);
 
     ResponseEntity<LibraryRecordDTO> response =
-        libraryRecordController.createLibraryRecord(inputRecord);
+        libraryRecordsController.createLibraryRecord(inputRecord);
 
     assertEquals(HttpStatus.CREATED, response.getStatusCode());
     assertEquals(inputRecord, response.getBody());
@@ -46,10 +46,10 @@ class LibraryRecordControllerTest {
   void testGetLibraryRecordById() {
     Long recordId = 1L;
     LibraryRecordDTO record = new LibraryRecordDTO();
-    when(libraryRecordService.getById(recordId)).thenReturn(record);
+    when(libraryRecordsService.getById(recordId)).thenReturn(record);
 
     ResponseEntity<LibraryRecordDTO> response =
-        libraryRecordController.getLibraryRecordById(recordId);
+        libraryRecordsController.getLibraryRecordById(recordId);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(record, response.getBody());
@@ -59,42 +59,40 @@ class LibraryRecordControllerTest {
   void testGetLibraryRecordById_RecordNotFound() {
     long recordId = 1L;
 
-    when(libraryRecordService.getById(recordId)).thenReturn(null);
+    when(libraryRecordsService.getById(recordId)).thenReturn(null);
 
     assertThrows(LibraryRecordNotFoundException.class,
-        () -> libraryRecordController.getLibraryRecordById(recordId));
+        () -> libraryRecordsController.getLibraryRecordById(recordId));
   }
 
   @Test
   void testGetAllLibraryRecords() {
-    when(libraryRecordService.getAll()).thenReturn(new ArrayList<>());
+    when(libraryRecordsService.getAll()).thenReturn(new ArrayList<>());
 
     ResponseEntity<List<LibraryRecordDTO>> response =
-        libraryRecordController.getAllLibraryRecords();
+        libraryRecordsController.getAllLibraryRecords();
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
 
   @Test
   void testGetAllLibraryRecords_NoContent() {
-    when(libraryRecordService.getAll()).thenReturn(Collections.emptyList());
+    when(libraryRecordsService.getAll()).thenReturn(Collections.emptyList());
 
     ResponseEntity<List<LibraryRecordDTO>> response =
-        libraryRecordController.getAllLibraryRecords();
+        libraryRecordsController.getAllLibraryRecords();
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }
-
 
   @Test
   void testUpdateLibraryRecord() {
     Long recordId = 1L;
     LibraryRecordDTO updatedRecord = new LibraryRecordDTO();
-    when(libraryRecordService.update(recordId, updatedRecord)).thenReturn(updatedRecord);
+    when(libraryRecordsService.update(recordId, updatedRecord)).thenReturn(updatedRecord);
 
     ResponseEntity<LibraryRecordDTO> response =
-        libraryRecordController.updateLibraryRecord(recordId,
-            updatedRecord);
+        libraryRecordsController.updateLibraryRecord(recordId, updatedRecord);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
     assertEquals(updatedRecord, response.getBody());
@@ -105,17 +103,17 @@ class LibraryRecordControllerTest {
     long recordId = 1L;
     LibraryRecordDTO inputDTO = new LibraryRecordDTO();
 
-    when(libraryRecordService.update(recordId, inputDTO)).thenReturn(null);
+    when(libraryRecordsService.update(recordId, inputDTO)).thenReturn(null);
 
     assertThrows(LibraryRecordNotFoundException.class,
-        () -> libraryRecordController.updateLibraryRecord(recordId, inputDTO));
+        () -> libraryRecordsController.updateLibraryRecord(recordId, inputDTO));
   }
 
   @Test
   void testDeleteLibraryRecord() {
     Long recordId = 1L;
 
-    ResponseEntity<Void> response = libraryRecordController.deleteLibraryRecord(recordId);
+    ResponseEntity<Void> response = libraryRecordsController.deleteLibraryRecord(recordId);
 
     assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
   }

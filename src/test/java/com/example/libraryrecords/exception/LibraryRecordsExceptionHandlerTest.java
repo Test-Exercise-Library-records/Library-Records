@@ -14,7 +14,7 @@ class LibraryRecordsExceptionHandlerTest {
         new LibraryRecordNotFoundException("Record not found");
     LibraryRecordsExceptionHandler handler = new LibraryRecordsExceptionHandler();
 
-    ResponseEntity<Object> responseEntity = handler.handleStudentNotFoundException(exception);
+    ResponseEntity<String> responseEntity = handler.handleStudentNotFoundException(exception);
 
     assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
     assertEquals("Record not found", responseEntity.getBody());

@@ -18,15 +18,16 @@ This Spring Boot microservice manages library records with a PostgreSQL database
     mvn clean spring-boot:run
     ```
   * Access Swagger at [SwaggerDocs](http://localhost:8085/swagger-ui/index.html)
+  * API Description (JSON) [Api description](http://localhost:8085/library-records-api-docs)
 
 ## What next should be done if there will be more time
-  * Clean up unnecassary code 
+  * Clean up unnecessary code 
   * Carry out api documentation from controller to configs
   * Add test data for integration tests and make few test strategies
   * Complete second part of the task
   * Create and configure kubernetes cluster 
   * Add gateway microservice
-  * Add author entity many to many to lib-records
+  * Add author entity with many-to-many relationship to lib-records
   * One command project start
     
 ## Contributions

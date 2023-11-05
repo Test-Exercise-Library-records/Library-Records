@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class LibraryRecordControllerIntegrationTest {
+class LibraryRecordsControllerIntegrationTest {
   private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
   private static final String TITLE = "testTitle";
   private static final String AUTHOR = "testAuthor";
@@ -48,9 +48,10 @@ class LibraryRecordControllerIntegrationTest {
     inputRecord.setTitle(TITLE);
     inputRecord.setAuthor(AUTHOR);
 
-    mockMvc.perform(post("/library-records").contentType(MediaType.APPLICATION_JSON)
-            .content(OBJECT_MAPPER.writeValueAsString(inputRecord))).andExpect(status().isCreated())
-        .andExpect(jsonPath("$.title").value(TITLE));
+    mockMvc
+        .perform(post("/library-records").contentType(MediaType.APPLICATION_JSON)
+            .content(OBJECT_MAPPER.writeValueAsString(inputRecord)))
+        .andExpect(status().isCreated()).andExpect(jsonPath("$.title").value(TITLE));
   }
 
   @Test
@@ -65,8 +66,7 @@ class LibraryRecordControllerIntegrationTest {
   @Order(3)
   void testGetAllLibraryRecords_retrieveAll_OkAndArrayContainsExpectedRecord() throws Exception {
     mockMvc.perform(get("/library-records")).andExpect(status().isOk())
-        .andExpect(jsonPath("$.*").isArray())
-        .andExpect(jsonPath("$.*", hasSize(1)))
+        .andExpect(jsonPath("$.*").isArray()).andExpect(jsonPath("$.*", hasSize(1)))
         .andExpect(jsonPath("$.[0].title").value(TITLE));
   }
 
@@ -78,9 +78,10 @@ class LibraryRecordControllerIntegrationTest {
     updatedRecord.setTitle(updatedTitle);
     updatedRecord.setAuthor(AUTHOR);
 
-    mockMvc.perform(put("/library-records/{id}", RECORD_ID).contentType(MediaType.APPLICATION_JSON)
-            .content(OBJECT_MAPPER.writeValueAsString(updatedRecord))).andExpect(status().isOk())
-        .andExpect(jsonPath("$.title").value(updatedTitle));
+    mockMvc
+        .perform(put("/library-records/{id}", RECORD_ID).contentType(MediaType.APPLICATION_JSON)
+            .content(OBJECT_MAPPER.writeValueAsString(updatedRecord)))
+        .andExpect(status().isOk()).andExpect(jsonPath("$.title").value(updatedTitle));
   }
 
   @Test

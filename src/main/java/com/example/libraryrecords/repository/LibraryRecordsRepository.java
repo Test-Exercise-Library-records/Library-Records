@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
  * Repository interface for managing library records in the database.
  */
 @Repository
-public interface LibraryRecordRepository extends JpaRepository<LibraryRecord, Long> {
+public interface LibraryRecordsRepository extends JpaRepository<LibraryRecord, Long> {
 
 }

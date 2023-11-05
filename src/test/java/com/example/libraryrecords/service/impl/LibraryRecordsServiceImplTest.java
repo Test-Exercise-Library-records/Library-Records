@@ -10,7 +10,7 @@ import static org.mockito.Mockito.when;
 import com.example.libraryrecords.dto.LibraryRecordDTO;
 import com.example.libraryrecords.entity.LibraryRecord;
 import com.example.libraryrecords.mapper.LibraryRecordMapper;
-import com.example.libraryrecords.repository.LibraryRecordRepository;
+import com.example.libraryrecords.repository.LibraryRecordsRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -20,16 +20,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-class LibraryRecordServiceImplTest {
+class LibraryRecordsServiceImplTest {
 
   private static final String TITLE = "testTitle";
   private static final String AUTHOR = "testAuthor";
   private static final long RECORD_ID = 1L;
 
   @Autowired
-  private LibraryRecordServiceImpl libraryRecordService;
+  private LibraryRecordsServiceImpl libraryRecordService;
   @MockBean
-  private LibraryRecordRepository repository;
+  private LibraryRecordsRepository repository;
   @MockBean
   private LibraryRecordMapper mapper;
 
