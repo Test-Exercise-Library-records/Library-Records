@@ -19,6 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 class LibraryRecordsControllerTest {
+  private static final String NOT_FOUND_EXCEPTION_MESSAGE = "Library Records not found";
+
   @InjectMocks
   private LibraryRecordsController libraryRecordsController;
 
@@ -69,20 +71,16 @@ class LibraryRecordsControllerTest {
   void testGetAllLibraryRecords() {
     when(libraryRecordsService.getAll()).thenReturn(new ArrayList<>());
 
-    ResponseEntity<List<LibraryRecordDTO>> response =
-        libraryRecordsController.getAllLibraryRecords();
-
-    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    assertThrows(LibraryRecordNotFoundException.class,
+        () -> libraryRecordsController.getAllLibraryRecords(), NOT_FOUND_EXCEPTION_MESSAGE);
   }
 
   @Test
   void testGetAllLibraryRecords_NoContent() {
     when(libraryRecordsService.getAll()).thenReturn(Collections.emptyList());
 
-    ResponseEntity<List<LibraryRecordDTO>> response =
-        libraryRecordsController.getAllLibraryRecords();
-
-    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    assertThrows(LibraryRecordNotFoundException.class,
+        () -> libraryRecordsController.getAllLibraryRecords(), NOT_FOUND_EXCEPTION_MESSAGE);
   }
 
   @Test

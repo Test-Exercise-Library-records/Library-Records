@@ -38,7 +38,7 @@ class LibraryRecordsControllerIntegrationTest {
   @Test
   @Order(0)
   void testGetAllLibraryRecords_retrieveAll_NoContentAndResponseIsEmpty() throws Exception {
-    mockMvc.perform(get("/library-records")).andExpect(status().isNoContent());
+    mockMvc.perform(get("/library-records")).andExpect(status().isNotFound());
   }
 
   @Test
@@ -93,6 +93,6 @@ class LibraryRecordsControllerIntegrationTest {
   @Test
   @Order(6)
   void testGetAllLibraryRecords_deleted_noContentAndResponseIsEmpty() throws Exception {
-    mockMvc.perform(get("/library-records")).andExpect(status().isNoContent());
+    mockMvc.perform(get("/library-records")).andExpect(status().isNotFound());
   }
 }
