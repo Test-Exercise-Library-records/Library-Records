@@ -1,7 +1,9 @@
 spring:
   application:
-    name: library-records-test
+    name: library-records
   cloud:
     config:
       import-check:
         enabled: false
+  profiles:
+    active: test

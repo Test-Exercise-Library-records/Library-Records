@@ -15,7 +15,7 @@ This Spring Boot microservice manages library records with a PostgreSQL database
   * Start config server and discovery server.
   * Build and run the application usnig
     ```
-    mvn clean spring-boot:run
+    ./mvnw clean spring-boot:run -Dspring-boot.run.profiles=dev
     ```
   * Access Swagger at [SwaggerDocs](http://localhost:8085/swagger-ui/index.html)
   * API Description (JSON) [Api description](http://localhost:8085/library-records-api-docs)

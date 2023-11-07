@@ -2,7 +2,10 @@ spring:
   application:
     name: library-records
   config:
-    import: configserver:http://localhost:8888
-
-server:
-  port: 8085
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      enabled: true
+      fail-fast: true
+  profiles:
+    active: dev
