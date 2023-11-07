@@ -28,13 +28,6 @@ public class LibraryRecordsController implements LibraryRecordsAPI {
 
   private final LibraryRecordsService libraryRecordsService;
 
-  /**
-   * Creates a new library record in the system.
-   *
-   * @param libraryRecord The library record to be created.
-   *
-   * @return A response entity containing the created library record with a status of 201 (Created).
-   */
   @Override
   @PostMapping
   public ResponseEntity<LibraryRecordDTO> createLibraryRecord(
@@ -43,14 +36,7 @@ public class LibraryRecordsController implements LibraryRecordsAPI {
     return new ResponseEntity<>(createdRecord, HttpStatus.CREATED);
   }
 
-  /**
-   * Retrieves a library record by its unique ID.
-   *
-   * @param id The ID of the library record to retrieve.
-   *
-   * @return A response entity containing the retrieved library record with a status of 200 (OK) if
-   *         found, or a response with a status of 404 (Not Found) if the record does not exist.
-   */
+  @Override
   @GetMapping("/{id}")
   public ResponseEntity<LibraryRecordDTO> getLibraryRecordById(@PathVariable @Min(1) Long id) {
     LibraryRecordDTO libraryRecord = libraryRecordsService.getById(id);
@@ -61,13 +47,7 @@ public class LibraryRecordsController implements LibraryRecordsAPI {
     }
   }
 
-  /**
-   * Retrieves a list of all library records available in the system.
-   *
-   * @return A response entity containing a list of retrieved library records with a status of 200
-   *         (OK) if records exist, or a response with a status of 204 (No Content) if there are no
-   *         records.
-   */
+  @Override
   @GetMapping
   public ResponseEntity<List<LibraryRecordDTO>> getAllLibraryRecords() {
     List<LibraryRecordDTO> libraryRecords = libraryRecordsService.getAll();
@@ -78,17 +58,7 @@ public class LibraryRecordsController implements LibraryRecordsAPI {
     }
   }
 
-  /**
-   * Updates an existing library record by its ID.
-   *
-   * @param id The ID of the library record to update.
-   * @param libraryRecord The updated library record information.
-   *
-   * @return A response entity containing the updated library record with a status of 200 (OK) if
-   *         the update is successful, or a response with a status of 404 (Not Found) if the record
-   *         does not exist, or a response with a status of 400 (Bad Request) if the request is
-   *         invalid.
-   */
+  @Override
   @PutMapping("/{id}")
   public ResponseEntity<LibraryRecordDTO> updateLibraryRecord(@PathVariable @Min(1) Long id,
       @RequestBody @Valid LibraryRecordDTO libraryRecord) {
@@ -100,14 +70,7 @@ public class LibraryRecordsController implements LibraryRecordsAPI {
     }
   }
 
-  /**
-   * Deletes a library record by its ID.
-   *
-   * @param id The ID of the library record to delete.
-   *
-   * @return A response entity with a status of 204 (No Content) if the record is successfully
-   *         deleted.
-   */
+  @Override
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteLibraryRecord(@PathVariable @Min(1) Long id) {
     libraryRecordsService.delete(id);
